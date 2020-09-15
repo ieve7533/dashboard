@@ -29,7 +29,9 @@ class App extends EventEmitter {
         this.app = express();
         this.mode = process.env.MODE;
         this.app.use(cors());
-        this.app.use(helmet());
+        this.app.use(helmet({
+            contentSecurityPolicy: false,
+        }));
         this.app.use(express.json());
         this.app.use(express.urlencoded({ extended: true }));
         this.app.use(session({

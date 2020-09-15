@@ -15,7 +15,7 @@
             <div class="justify-content-center align-items-center d-flex">
                 <a href="/dashboard/manage/<%= guild.id%>" class="waves-effect">
                     <img class="card-img-top rounded justify-content-center"
-                        src="<%- guild.iconURL%>"
+                        src="<%= guild.icon ? `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}` : `https://dummyimage.com/128x128/23272A/ffffff.png&text=${encodeURIComponent(guild.name)}` %>"
                         style="width:128px;height:128px;" alt="<%- guild.name %>">
                 </a>
             </div>

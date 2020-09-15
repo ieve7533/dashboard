@@ -33,6 +33,7 @@ window.onload = () => {
     function save(event) {
         event.preventDefault();
         const data = $(this).closest('form').serialize();
+        if (!data) return;
         $.ajax({
             type: 'post',
             method: 'post',
@@ -51,7 +52,7 @@ window.onload = () => {
             error: (e) => {
                 console.log(e);
                 const code = e.status;
-                if (code === 500) {
+                if (code === 500 || code === 0) {
                     window.location.href = '/500';
                     return;
                 } else if (code === 403) {
