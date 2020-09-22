@@ -1,47 +1,70 @@
-<nav class="navbar navbar-expand-lg bg-primary bind-navbar">
-    <a class="navbar-brand" href="/">
-        <img class="rounded-circle" style="margin-left: 1rem;max-height: 2.65rem;max-width: 2.65rem;"
-            src='/public/img/logo.jpg' />
-        <img class="rounded" style="max-height: 4rem;max-width: 9rem;" src="/public/img/text-logo.png" />
-    </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <div class="h-line rounded"></div>
-        <div class="h-line rounded"></div>
-        <div class="h-line rounded"></div>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent" style="z-index: 1000;">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item m-1">
-                <a class="nav-link" href="/dashboard">Dashboard</a>
+<nav class="blue darken-2" style="z-index: 2000;">
+    <div class="nav-wrapper">
+        <a href="#" data-target="mobile" class="sidenav-trigger">
+            <i class="material-icons right">menu</i>
+        </a>
+        <a href="/">
+            <img class="rounded-circle" style="margin-left: 1rem;max-height: 2.65rem;max-width: 2.65rem;"
+                src='/public/img/logo.jpg' />
+            <img class="rounded" style="max-height: 4rem;max-width: 9rem;" src="/public/img/text-logo.png" />
+        </a>
+        <ul class="right hide-on-med-and-down">
+            <li><a href="/">Home</a></li>
+            <% if (user) { %>
+            <li><a href="/dashboard">Dashboard</a></li>
+            <% } %>
+            <li><a href="/commands">Commands</a></li>
+            <li><a href="/coming-soon">Wiki</a></li>
+            <li><a href="/coming-soon">Voting</a></li>
+            <% if (!user) { %>
+            <li>
+                <a href="/oauth/login" class="waves-effect waves-light btn blue hoverable">Login <img
+                        style="max-width: 1.3rem; height: 1.3rem;" src='/public/img/discord_logo.svg' />
+                </a>
             </li>
-            <li class="nav-item m-1">
-                <a class="nav-link" href="/commands">Commands</a>
+            <% } else { %>
+            <li>
+                <a><img class="rounded-circle tooltipped" data-position="bottom" data-tooltip="<%- user.tag %>" href="#"
+                        style="max-width: 48px;max-height: 48px;" src="<%= user.avatarURL %>" />
+                </a>
             </li>
-            <li class="nav-item m-1">
-                <a class="nav-link" href="/voting">Voting</a>
+            <li>
+                <a href="/oauth/logout" class="btn hoverable waves-effect blue">
+                    Logout <i class="material-icons right">exit_to_app</i>
+                </a>
             </li>
+            <% } %>
         </ul>
-        <% if (user) { %>
-        <div class="nav-item dropdown ml-auto">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-                <img class="rounded-circle" style="max-width: 32px;max-height: 32px;" src="<%= user.avatarURL %>" /> <%- user.tag %>
-            </a>
-            <div class="dropdown-menu dropdown-menu-lg-right rounded bg-black" aria-labelledby="navbarDropdown"
-                style="width: 200px;">
-                <a class="dropdown-item text-white" href="/dashboard"><img class="rounded-circle"
-                        style="max-width: 2rem;max-height: 2rem;" src="<%= user.avatarURL %>" />
-                        <%- user.tag %></a>
-                <a class="dropdown-item text-white" href="/dashboard">Manage Servers</a>
-                <a class="dropdown-item text-white" href="/oauth/logout">Logout</a>
-            </div>
-        </div>
-        <% } else { %>
-        <div class="ml-auto">
-            <a href="/oauth/login" class="btn waves-effect light-blue white-text"><img class="rounded" style="max-width: 1.3rem; height: 1.3rem;"
-                    src='/public/img/discord_logo.svg'> Login</a>
-        </div>
-        <% } %>
     </div>
 </nav>
+<ul class="sidenav" id="mobile" style="z-index: 2001;">
+    <li><a href="/">Home</a></li>
+    <% if (user) { %>
+    <li><a href="/dashboard">Dashboard</a></li>
+    <% } %>
+    <li><a href="/commands">Commands</a></li>
+    <li><a href="/coming-soon">Voting</a></li>
+    <li><a href="/coming-soon">Wiki</a></li>
+    <% if (!user) { %>
+    <li class="divider"></li>
+    <li>
+        <a href="/oauth/login" class="waves-effect waves-light">Login with Discord <img
+                style="max-width: 1.3rem; height: 1.3rem;" src='/public/img/discord_logo_black.svg' />
+        </a>
+    </li>
+    <% } else { %>
+    <li>
+        <a href="#"><img class="rounded-circle" style="max-width: 32px;max-height: 32px;" src="<%= user.avatarURL %>" />
+            <%- user.tag %>
+        </a>
+    </li>
+    <li class="divider"></li>
+    <li><a class="black-text" href="/oauth/logout">Logout<i class="material-icons right">exit_to_app</i></a>
+    </li>
+    <% } %>
+</ul>
+<script>
+    $(document).ready(() => {
+        M.AutoInit();
+    });
+</script>

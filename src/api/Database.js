@@ -39,9 +39,8 @@ class API extends EventEmitter {
     get(path) {
         return new Promise(async (resolve, reject) => {
             const response = await fetch.default(`${this.uri}${path}`).catch(reject);
-            if (response.status !== 200) return reject(response);
-            const body = await response.json().catch(reject);
-            resolve(body);
+            if (response.status !== 200) return reject(await response.json());
+            resolve();
         });
     }
     /**
@@ -59,14 +58,13 @@ class API extends EventEmitter {
                 },
                 body: JSON.stringify(partial),
             }).catch(reject);
-            if (response.status !== 200) return reject(response);
-            const body = await response.json().catch(reject);
-            resolve(body);
+            if (response.status !== 200) return reject(await response.json());
+            resolve();
         });
     }
     /**
      * 
-     * @returns {Promise<{any}>}
+     * @returns {Promise<{}>}
      * @param {string} path
      */
     delete(path) {
@@ -74,9 +72,8 @@ class API extends EventEmitter {
             const response = await fetch.default(`${this.uri}${path}`, {
                 method: 'delete',
             }).catch(reject);
-            if (response.status !== 200) return reject(response);
-            const body = await response.json().catch(reject);
-            resolve(body);
+            if (response.status !== 200) return reject(await response.json());
+            resolve();
         });
     }
 }

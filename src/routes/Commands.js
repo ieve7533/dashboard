@@ -5,8 +5,14 @@ class Commands extends Route {
         super(app, '/commands');
     }
     createRoute() {
-        this.route.get('/', (req, res) => {
-            this.app.renderTemplate('Commands.ejs', req, res);
+        this.route.get('/', async (req, res) => {
+            try {
+                const commands = await this.app.bot.getCommands();
+                this.app.renderTemplate('Commands.ejs', req, res, { commands });
+            } catch (e) {
+                console.error(e);
+                this.app.renderTemplate('500.ejs', req, res, {}, 500);
+            }
         });
         return this.route;
     }

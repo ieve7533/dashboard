@@ -2,7 +2,7 @@ const Route = require('../classes/Route');
 
 class API extends Route {
     constructor(app) {
-        super(app, '/api/');
+        super(app, '/api');
         this.parse = {
             topgg: function (body) {
                 return {

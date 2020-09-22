@@ -5,6 +5,18 @@ class Bot {
         this.uri = process.env.BOT_URI;
     }
     /**
+     * @returns {Promise<{name:string,description:string,usage:string,category:string}[]>}
+     */
+    async getCommands() {
+        try {
+            const response = await fetch.default(`${this.uri}/api/commands`);
+            if (response.status >= 400) throw response;
+            return response.json();
+        } catch (e) {
+            throw e;
+        }
+    }
+    /**
      * @returns {string[]}
      */
     async getGuilds() {

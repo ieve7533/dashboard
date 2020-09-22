@@ -74,6 +74,8 @@ class Dashboard extends Route {
                 const botGuilds = await this.app.bot.getGuilds().catch((e) => { throw e; });
                 const guild = userGuilds.find((g) => g.id === req.params.id && botGuilds.find((bg) => bg === req.params.id));
                 if (!guild) return res.sendStatus(403);
+                console.log(req.body);
+                return res.sendStatus(200);
                 const settings = await this.app.db.guilds.fetch(guild.id).catch((e) => { throw e; });
                 const channels = await this.app.bot.getGuildChannels(guild.id).catch((e) => { throw e; });
                 const roles = await this.app.bot.getGuildRoles(guild.id).catch((e) => { throw e; });

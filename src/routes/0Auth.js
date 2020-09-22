@@ -9,19 +9,20 @@ class OAuth extends Route {
     }
     createRoute() {
         passport.serializeUser((user, done) => {
-            done(null, user);
+            done(null, user.id);
         });
-        passport.deserializeUser(async (userp, done) => {
-            const user = await this.app.localdb.User.findOne({ where: { id: userp.id } });
+        passport.deserializeUser(async (id, done) => {
+            const user = await this.app.localdb.User.findOne({ where: { id } });
             if (user) {
-                return user ? done(null,
+                return done(null,
                     new User(Object.assign(
                         user.toJSON(), {
                         accessToken: this.app.aes.decrypt(user.accessToken),
                         refreshToken: this.app.aes.decrypt(user.refreshToken)
                     }))
-                ) : done(null, null);
+                );
             }
+            done(new Error('invalid user'), null);
         });
         passport.use(new Strategy({
             clientID: this.app.mode !== 'DEV' ? process.env.CLIENT_ID : process.env.DEV_CLIENT_ID,
@@ -32,15 +33,19 @@ class OAuth extends Route {
             const user = new User(Object.assign(profile, { accessToken, refreshToken }));
             try {
                 let findUser = await this.app.localdb.User.findOne({ where: { id: user.id } }).catch((e) => { throw e; });
-                if (findUser) await this.app.localdb.User.update(
-                    Object.assign(user.toJSON(), {
-                        accessToken: this.app.aes.encrypt(user.accessToken),
-                        refreshToken: this.app.aes.encrypt(user.refreshToken)
-                    }), { where: { id: user.id } }).catch((e) => { throw e; });
-                else await this.app.localdb.User.create(Object.assign(user.toJSON(), {
-                    accessToken: this.app.aes.encrypt(user.accessToken),
-                    refreshToken: this.app.aes.encrypt(user.refreshToken)
-                })).catch((e) => { throw e; });
+                if (findUser) {
+                    await this.app.localdb.User.update(
+                        Object.assign(user.toJSON(), {
+                            accessToken: this.app.aes.encrypt(user.accessToken),
+                            refreshToken: this.app.aes.encrypt(user.refreshToken)
+                        }), { where: { id: user.id } }).catch((e) => { throw e; });
+                } else {
+                    await this.app.localdb.User.create(
+                        Object.assign(user.toJSON(), {
+                            accessToken: this.app.aes.encrypt(user.accessToken),
+                            refreshToken: this.app.aes.encrypt(user.refreshToken)
+                        })).catch((e) => { throw e; });
+                }
                 done(null, user);
             } catch (err) {
                 done(err, null);
@@ -49,7 +54,7 @@ class OAuth extends Route {
         this.app.app.use(passport.initialize());
         this.app.app.use(passport.session());
         this.route.get('/login', (req, res, next) => {
-            if (req.isAuthenticated()) return res.redirect('/');
+            if (req.isAuthenticated()) return res.redirect('/dashboard');
             next();
         }, passport.authenticate('discord'));
         this.route.get('/logout', (req, res) => {

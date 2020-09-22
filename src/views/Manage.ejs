@@ -1,295 +1,125 @@
 <!DOCTYPE html>
 <html>
-<%- include('Components/Header', { title: `${guild.name}` }) %>
+<%- include('Components/Header', { title: guild.name }) %>
 
-<body class="theme-dark">
+<body style="animation: none;">
     <%- include('Components/Navbar', { user }) %>
-    <script src="/public/js/manage.js"></script>
-
-    <div class="mt-5">
-        <img class="center rounded-circle mx-auto d-block" style="text-align:center;max-width: 148px;height:148px"
-            src='<%- guild.iconURL %>'>
-        <h1 class="text-center"><%- guild.name %></h1>
-    </div>
-
-    <div class="card-group mt-5 justify-content-center">
-        <div class="card h-100 text-white rounded m-2 bind-theme bind-theme-accent" style="max-width: 32rem;">
-            <div class="card-body">
-                <div class="card-title" style="text-align: center;">
-                    <strong>Information</strong>
+    <div class="parallax-container">
+        <div class="section no-pad-bot pb-5">
+            <div class="container">
+                <br><br>
+                <br><br>
+                <img class="center rounded-circle mx-auto d-block"
+                    style="text-align:center;max-width: 148px;height:148px" src='<%- guild.iconURL %>'>
+                <h1 class="header center white-text text-lighten-2"><%- guild.name %></h1>
+                <div class="row center">
+                    <h5 class="header col s12 light">
+                        Welcome to the Server Management Panel! <br>
+                        With our dashboard everything is easy to setup! <br>
+                        Now, Configure Unicron to your awesome preferences!
+                    </h5>
                 </div>
-                <p class="text-justify text-center">
-                    Welcome to the Server Management Panel! <br>
-                    With our dashboard everything is easy to setup! <br>
-                    Now, Configure Unicron to your awesome preferences!
-                </p>
+                <br><br>
             </div>
         </div>
-        <div class="card h-100 text-white rounded m-2 bind-theme bind-theme-accent" style="max-width: 12rem;">
-            <form method="post">
-                <div class="card-body">
-                    <div class="form-group">
+    </div>
+    <div class="container">
+        <ul class="blue-grey darken-4 tabs tabs-fixed-width z-depth-1 rounded-bottom rounded-top">
+            <li class="tab"><a class="white-text" href="#general">General</a></li>
+            <li class="tab"><a class="white-text" href="#announcements">Announcements</a></li>
+            <li class="tab"><a class="white-text" href="#moderation">Moderation</a></li>
+            <li class="tab"><a class="white-text" href="#dynamic">Dynamic Text/Voice</a></li>
+        </ul>
+        <div id="general" class="col s12 white-text card blue-grey darken-3" style="height: 100%;">
+            <form>
+                <div class="card-body d-block">
+                    <h5 class="white-text center">General Settings</h5>
+                    <div class="input-field inline s12">
                         <label for="prefix">Prefix</label>
-                        <input type="text" class="form-control form-control-sm bind-theme border-black force-theme"
-                            value="<%- settings.prefix %>" id="prefix" name="prefix" maxlength="5" autocomplete="off"
-                            spellcheck="false">
+                        <input id="input_text" type="text" class="white-text" value="<%- settings.prefix %>" id="prefix"
+                            name="prefix" maxlength="5" autocomplete="off" spellcheck="false">
+                    </div>
+                    <div class="card-footer border-0 p-0 blue-grey darken-3">
+                        <button type="submit" name="submit" class="btn waves-effect green" href="#">
+                            Save<i class="material-icons right">save</i>
+                        </button>
                     </div>
                 </div>
-                <div class="card-footer">
-                    <div style="text-align: right;">
+            </form>
+        </div>
+        <div id="announcements" class="col s12 white-text card blue-grey darken-3">
+            <form>
+                <div class="card-body">
+                    <h5 class="white-text center">Announcements</h5>
+                    <div class="form-group blue-grey darken-4 card rounded-bottom rounded-top mt-4">
+                        <div class="card-body">
+                            <div class="card-title center">Welcomer</div>
+                            <div class="switch">
+                                <label>
+                                    OFF
+                                    <input type="hidden" value="false" name="welcomeEnabled">
+                                    <input type="checkbox" value="true" name="welcomeEnabled"
+                                        <%- settings.welcomeEnabled ? 'checked' : '' %>>
+                                    <span class="lever" class="right"></span>
+                                    ON
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group blue-grey darken-4 card rounded-bottom rounded-top mt-4">
+                        <div class="card-body">
+                            <div class="card-title center">Farewell</div>
+                            <div class="switch">
+                                <label>
+                                    OFF
+                                    <input type="hidden" value="false" name="farewellEnabled">
+                                    <input type="checkbox" value="true" name="farewellEnabled"
+                                        <%- settings.farewellEnabled ? 'checked' : '' %>>
+                                    <span class="lever" class="right"></span>
+                                    ON
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer border-0 p-0 blue-grey darken-3">
                         <button type="submit" name="submit" class="btn waves-effect green" href="#">
-                            Save
+                            Save<i class="material-icons right">save</i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div id="moderation" class="col s12 white-text card blue-grey darken-3">
+            <form>
+                <div class="card-body">
+                    <h5 class="white-text center">Moderation</h5>
+
+
+                    <div class="card-footer border-0 p-0 blue-grey darken-3">
+                        <button type="submit" name="submit" class="btn waves-effect green" href="#">
+                            Save<i class="material-icons right">save</i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div id="dynamic" class="col s12 white-text card blue-grey darken-3">
+            <form>
+                <div class="card-body">
+                    <h5 class="white-text center">Dynamic Text/Voice</h5>
+
+
+                    <div class="card-footer border-0 p-0 blue-grey darken-3">
+                        <button type="submit" name="submit" class="btn waves-effect green" href="#">
+                            Save<i class="material-icons right">save</i>
                         </button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
-    <div class="card-group mt-5 align-items-sm-start justify-content-center">
-        <div class="card h-100 text-white rounded m-2 bind-theme bind-theme-accent" style="max-width: 32rem;">
-            <form method="post">
-                <div class="card-body">
-                    <div class="card-title" style="text-align: center;">
-                        <strong>Welcomer</strong>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col">
-                            <label for="welcomeEnabled">Welcomer</label>
-                            <select class="form-control form-control-sm bind-theme border-black force-theme"
-                                id="welcomeEnabled" name="welcomeEnabled">
-                                <option value="true" <%- settings.welcomeEnabled ? 'selected': ''; %>>On</option>
-                                <option value="false" <%- !settings.welcomeEnabled ? 'selected': ''; %>>Off</option>
-                            </select>
-                        </div>
-                        <div class="form-group col">
-                            <label for="welcomeChannel">Welcome Channel</label>
-                            <select class="form-control form-control-sm bind-theme border-black force-theme"
-                                id="welcomeChannel" name="welcomeChannel">
-                                <option value="<%= settings.welcomeChannel ? settings.welcomeChannel : '';  %>" selected
-                                    hidden>
-                                    <%- settings.welcomeChannel && guild.channels.find((c) => c.id === settings.welcomeChannel) ? `#${guild.channels.find((c) => c.id === settings.welcomeChannel).name}` : 'Select a Channel'; %>
-                                </option>
-                                <% guild.channels.filter((c) => c.type === 'text').forEach((c) => { %>
-                                <option value="<%- c.id %>">#<%- c.name %></option>
-                                <% }) %>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="welcomeMessage">Welcome Message</label>
-                        <textarea class="form-control bind-theme border-black force-theme" id="welcomeMessage" rows="3"
-                            name="welcomeMessage"><%- settings.welcomeMessage %></textarea>
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <div style="text-align: right;">
-                        <button type="submit" name="submit" class="btn waves-effect green" href="#">
-                            Save
-                        </button>
-                    </div>
-                </div>
-            </form>
-        </div>
-        <div class="card h-100 text-white rounded m-2 bind-theme bind-theme-accent" style="max-width: 32rem;">
-            <form method="post">
-                <div class="card-body">
-                    <div class="card-title" style="text-align: center;">
-                        <strong>Farewell</strong>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col">
-                            <label for="farewellEnabled">Farewell</label>
-                            <select class="form-control form-control-sm bind-theme border-black force-theme"
-                                id="farewellEnabled" name="farewellEnabled">
-                                <option value="true" <%- settings.farewellEnabled ? 'selected': ''; %>>On</option>
-                                <option value="false" <%- !settings.farewellEnabled ? 'selected': ''; %>>Off</option>
-                            </select>
-                        </div>
-                        <div class="form-group col">
-                            <label for="farewellChannel">Farewell Channel</label>
-                            <select class="form-control form-control-sm bind-theme border-black force-theme"
-                                id="farewellChannel" name="farewellChannel">
-                                <option value="<%= settings.farewellChannel ? settings.farewellChannel : '';  %>"
-                                    selected hidden>
-                                    <%- settings.farewellChannel && guild.channels.find((c) => c.id === settings.farewellChannel) ? `#${guild.channels.find((c) => c.id === settings.farewellChannel).name}` : 'Select a Channel'; %>
-                                </option>
-                                <% guild.channels.filter((c) => c.type === 'text').forEach((c) => { %>
-                                <option value="<%- c.id %>">#<%- c.name %></option>
-                                <% }) %>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="farewellMessage">Farewell Message</label>
-                        <textarea class="form-control bind-theme border-black force-theme" id="farewellMessage" rows="3"
-                            name="farewellMessage"><%- settings.farewellMessage %></textarea>
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <div style="text-align: right;">
-                        <button type="submit" name="submit" class="btn waves-effect green" href="#">
-                            Save
-                        </button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-    <div class="card-group mt-5 align-items-sm-start justify-content-center">
-        <div class="card h-100 text-white rounded m-2 bind-theme bind-theme-accent" style="max-width: 64rem;">
-            <form method="post">
-                <div class="card-body">
-                    <div class="card-title" style="text-align: center;">
-                        <strong>Moderation</strong>
-                    </div>
-                    <div class="form-row justify-content-center">
-                        <div class="form-group col-5">
-                            <label for="modLogChannel">Mod Log Channel</label>
-                            <select class="form-control form-control-sm bind-theme border-black force-theme"
-                                id="modLogChannel" name="modLogChannel">
-                                <option value="<%= settings.modLogChannel ? settings.modLogChannel : '';  %>" selected
-                                    hidden>
-                                    <%- settings.modLogChannel && guild.channels.find((c) => c.id === settings.modLogChannel) ? `#${guild.channels.find((c) => c.id === settings.modLogChannel).name}` : 'Select a Channel'; %>
-                                </option>
-                                <% guild.channels.filter((c) => c.type === 'text').forEach((c) => { %>
-                                <option value="<%- c.id %>">#<%- c.name %></option>
-                                <% }) %>
-                            </select>
-                        </div>
-                        <div class="form-group col-5">
-                            <label for="autoModeration">Auto Moderation</label>
-                            <select class="form-control form-control-sm bind-theme border-black force-theme"
-                                id="autoModeration" name="autoModeration">
-                                <option value="true" <%- settings.autoModeration ? 'selected': ''; %>>On</option>
-                                <option value="false" <%- !settings.autoModeration ? 'selected': ''; %>>Off</option>
-                            </select>
-                            <i>This works when one of the Chat Filters below is enabled</i>
-                        </div>
-                    </div>
-                    <div class="form-row justify-content-center">
-                        <div class="form-group col-5">
-                            <label for="autoModAction">Auto Mod Action</label>
-                            <select class="form-control form-control-sm bind-theme border-black force-theme"
-                                id="autoModAction" name="autoModAction">
-                                <option value="MUTE" <%- settings.autoModAction === 'MUTE' ? 'selected': ''; %>>Mute
-                                </option>
-                                <option value="KICK" <%- settings.autoModAction === 'KICK' ? 'selected': ''; %>>Kick
-                                </option>
-                                <option value="SOFTBAN" <%- settings.autoModAction === 'SOFTBAN' ? 'selected': ''; %>>
-                                    Soft Ban</option>
-                                <option value="BAN" <%- settings.autoModAction === 'BAN' ? 'selected': ''; %>>Ban
-                                </option>
-                            </select>
-                        </div>
-                        <div class="form-group col-5">
-                            <label for="autoModDuration">Auto Mod Duration</label>
-                            <input type="text" class="form-control form-control-sm bind-theme border-black force-theme"
-                                value="<%- settings.autoModDuration %>" id="autoModDuration" name="autoModDuration"
-                                maxlength="10" autocomplete="off" spellcheck="false">
-                            Example: "6m" for 6 minutes, "9h" for 9 hours <br>
-                            <i>This value automatically converts to milliseconds on saved</i>
-                        </div>
-                    </div>
-                    <div class="card-title" style="text-align: center;">
-                        <strong>Chat Filters</strong>
-                    </div>
-                    <div class="form-row justify-content-center">
-                        <div class="form-group col-5">
-                            <label for="inviteFilter">Invite Filter</label>
-                            <select class="form-control form-control-sm bind-theme border-black force-theme"
-                                id="inviteFilter" name="inviteFilter">
-                                <option value="true" <%- settings.inviteFilter ? 'selected': ''; %>>On</option>
-                                <option value="false" <%- !settings.inviteFilter ? 'selected': ''; %>>Off</option>
-                            </select>
-                        </div>
-                        <div class="form-group col-5">
-                            <label for="swearFilter">Swear Filter</label>
-                            <select class="form-control form-control-sm bind-theme border-black force-theme"
-                                id="swearFilter" name="swearFilter">
-                                <option value="true" <%- settings.swearFilter ? 'selected': ''; %>>On</option>
-                                <option value="false" <%- !settings.swearFilter ? 'selected': ''; %>>Off</option>
-                            </select>
-                        </div>
-                        <div class="form-group col-5">
-                            <label for="mentionSpamFilter">Mention Spam Filter</label>
-                            <select class="form-control form-control-sm bind-theme border-black force-theme"
-                                id="mentionSpamFilter" name="mentionSpamFilter">
-                                <option value="true" <%- settings.mentionSpamFilter ? 'selected': ''; %>>On</option>
-                                <option value="false" <%- !settings.mentionSpamFilter ? 'selected': ''; %>>Off</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <div style="text-align: right;">
-                        <button type="submit" name="submit" class="btn waves-effect green" href="#">
-                            Save
-                        </button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-    <div class="card-group mt-5 justify-content-center">
-        <div class="card h-100 text-white rounded m-2 bind-theme bind-theme-accent" style="max-width: 64rem;">
-            <form method="post">
-                <div class="card-body">
-                    <div class="card-title" style="text-align: center;">
-                        <strong>Dynamic Text/Voice</strong>
-                    </div>
-                    <div class="form-row justify-content-center">
-                        <div class="form-group col">
-                            <label for="dynamicEnabled">Dynamic System</label>
-                            <select class="form-control form-control-sm bind-theme border-black force-theme"
-                                id="dynamicEnabled" name="dynamicEnabled">
-                                <option value="true" <%- settings.dynamicEnabled ? 'selected': ''; %>>On</option>
-                                <option value="false" <%- !settings.dynamicEnabled ? 'selected': ''; %>>Off
-                                </option>
-                            </select>
-                            <i>You can also have a role named <code>Dynamic Mod</code> so whoevers has that role has
-                                full access to all dynamic channels. like a Moderator</i>
-                        </div>
-                        <div class="form-group col">
-                            <label for="dynamicCategory">Dynamic Category</label>
-                            <select class="form-control form-control-sm bind-theme border-black force-theme"
-                                id="dynamicCategory" name="dynamicCategory">
-                                <option value="<%= settings.dynamicCategory ? settings.dynamicCategory : '';  %>"
-                                    selected hidden>
-                                    <%- settings.dynamicCategory && guild.channels.find((c) => c.id === settings.dynamicCategory) ? `${guild.channels.find((c) => c.id === settings.dynamicCategory).name}` : 'Select a Category'; %>
-                                </option>
-                                <% guild.channels.filter((c) => c.type === 'category').forEach((c) => { %>
-                                <option value="<%- c.id %>"><%- c.name %></option>
-                                <% }) %>
-                            </select> <i>The Category where all temporary text/voice channels will be created</i>
-                        </div>
-                    </div>
-                    <div class="form-row justify-content-center">
-                        <div class="form-group col-8">
-                            <label for="dynamicRoom">Dynamic Room</label>
-                            <select class="form-control form-control-sm bind-theme border-black force-theme"
-                                id="dynamicRoom" name="dynamicRoom">
-                                <option value="<%= settings.dynamicRoom ? settings.dynamicRoom : '';  %>" selected
-                                    hidden>
-                                    <%- settings.dynamicRoom && guild.channels.find((c) => c.id === settings.dynamicRoom) ? `${guild.channels.find((c) => c.id === settings.dynamicRoom).name}` : 'Select a Voice Channel'; %>
-                                </option>
-                                <% guild.channels.filter((c) => c.type === 'voice').forEach((c) => { %>
-                                <option value="<%- c.id %>"><%- c.name %></option>
-                                <% }) %>
-                            </select>
-                            <i>click to create voice channel Channel</i>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <div style="text-align: right;">
-                        <button type="submit" name="submit" class="btn waves-effect green" href="#">
-                            Save
-                        </button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
+    <script src="/public/js/manage.js">
+    </script>
     <%- include('Components/Footer') %>
 </body>
 
